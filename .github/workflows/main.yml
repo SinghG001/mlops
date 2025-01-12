@@ -37,13 +37,13 @@ jobs:
         run: docker save -o iris_rf_model.tar iris_rf_model            
 
       - name: 'Upload Artifact'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: iris_artifact
           path: iris_rf_model.tar
       
       - name: Download Artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: iris_artifact
           path: /opt/iris_rf_model.tar
