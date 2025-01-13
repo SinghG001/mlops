@@ -9,13 +9,27 @@ import mlflow
 import mlflow.sklearn
 import joblib
 
-data = load_iris()
+
+def load_data():
+    return load_iris()
+
+def create_model(n_estimators, random_state):
+    return RandomForestClassifier(n_estimators = n_estimators, random_state = random_state)
+
+def test_train_split(data):
+    X_train, X_test, y_train, y_test = train_test_split(X, y,test_size=0.2)
+    return X_train, X_test,y_train, y_test
+
+
+
+data = load_data()
+
+
 
 X = pd.DataFrame(data.data, columns=data.feature_names)
 y = pd.DataFrame(data.target, columns=['target'])
 
-
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+X_train, X_test,y_train, y_test =  test_train_split(data)
 
 mlflow.set_experiment("Random Forest Classifier")
 
@@ -26,7 +40,7 @@ with mlflow.start_run():
     mlflow.log_param("n_estimators", n_estimators)
     mlflow.log_param("random_state", random_state)
 
-    model = RandomForestClassifier(n_estimators=n_estimators, random_state=random_state)
+    model = create_model(n_estimators,random_state)
     model.fit(X_train, y_train.values.ravel())
     y_pred = model.predict(X_test)
     mse = mean_squared_error(y_test, y_pred)
