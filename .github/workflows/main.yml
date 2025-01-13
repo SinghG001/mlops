@@ -71,7 +71,7 @@ jobs:
 
       - name: Push image to docker hub
         run: |
-          docker login -u girish1808 -p ${{DOCKER_HUB_TOKEN}}
+          docker login -u girish1808 -p ${{ secrets.DOCKER_HUB_TOKEN }}
           dcoker push girish1808/iris_rf_model:latest
 
       
