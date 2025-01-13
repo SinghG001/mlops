@@ -1,7 +1,7 @@
 name: MLOps CI/CD Pipeline
 
 on:
-  [WORKDFLOW_DISPATCH]
+  [workflow_dispatch]
   # push:
   #   branches:
   #     - main
