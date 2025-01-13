@@ -1,9 +1,10 @@
 name: MLOps CI/CD Pipeline
 
 on:
-  push:
-    branches:
-      - main
+  [WORKDFLOW_DISPATCH]
+  # push:
+  #   branches:
+  #     - main
 jobs:
 
   lint:
@@ -59,26 +60,33 @@ jobs:
       - name: Install Dependencies
         run: pip install -r requirements.txt
 
-      - name: Train Model
-        run: python mlflow_train.py
+      # - name: Train Model
+      #   run: python mlflow_train.py
 
-      - name: Deploy Model
+      - name: Create model
         run: python session3/train.py
 
       - name: Build Docker Image
-        run: docker build -t iris_rf_model session3
-      
-      - name: Save Docker image
-        run: docker save -o iris_rf_model.tar iris_rf_model            
+        run: docker build -t girish1808/iris_rf_model:latest session3
 
-      - name: 'Upload Artifact'
-        uses: actions/upload-artifact@v3
-        with:
-          name: iris_artifact
-          path: iris_rf_model.tar
+      - name: Push image to docker hub
+        run: |
+          docker login -u girish1808 -p ${{DOCKER_HUB_TOKEN}}
+          dcoker push girish1808/iris_rf_model:latest
+
       
-      - name: Download Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: iris_artifact
-          path: /opt/iris_rf_model.tar
+      
+      # - name: Save Docker image
+      #   run: docker save -o iris_rf_model.tar iris_rf_model            
+
+      # - name: 'Upload Artifact'
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: iris_artifact
+      #     path: iris_rf_model.tar
+      
+      # - name: Download Artifact
+      #   uses: actions/download-artifact@v3
+      #   with:
+      #     name: iris_artifact
+      #     path: /opt/iris_rf_model.tar
