@@ -29,8 +29,27 @@ jobs:
       - name: Run Linter
         run: black .
 
-  build:
+  test:
     runs-on: ubuntu-latest
+    needs: lint  # This job will only run if 'lint' is successful
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Install Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install Test Dependencies
+        run: pip install pytest pytest-cov
+
+      - name: Run Unit Tests
+        run: pytest tests/
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
 
     steps:
       - name: Checkout Repository
