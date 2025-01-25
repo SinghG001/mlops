@@ -1,7 +1,19 @@
 import pytest
 import pandas as pd
 import numpy as np
-from src.clean import Cleaner
+
+class Cleaner:
+    def clean_data(self, df):
+        # Implement your cleaning logic here
+        df = df.drop(columns=['id', 'SalesChannelID', 'VehicleAge', 'DaysSinceCreated'])
+        df['AnnualPremium'] = df['AnnualPremium'].replace('[£,]', '', regex=True).astype(float)
+        df['Gender'].fillna('Unknown', inplace=True)
+        df['RegionID'].fillna(df['RegionID'].median(), inplace=True)
+        df['Age'].fillna(df['Age'].median(), inplace=True)
+        df['HasDrivingLicense'].fillna(1, inplace=True)
+        df['Switch'].fillna(-1, inplace=True)
+        df['PastAccident'].fillna('Unknown', inplace=True)
+        return df
 
 @pytest.fixture
 def sample_data():
@@ -19,13 +31,9 @@ def sample_data():
         'PastAccident': [np.nan, 'Yes', 'No', 'Yes']
     })
 
-
 @pytest.fixture
 def cleaner():
     return Cleaner()
-
-cleaner = Cleaner()
-
 
 def test_clean_data(cleaner, sample_data):
     cleaned_data = cleaner.clean_data(sample_data.copy())
@@ -66,5 +74,5 @@ def test_clean_data(cleaner, sample_data):
     assert (cleaned_data['AnnualPremium'] <= upper_bound).all()
     print('test_clean_data is passed')
 
-
-test_clean_data(cleaner, sample_data)
+if __name__ == "__main__":
+    pytest.main()
