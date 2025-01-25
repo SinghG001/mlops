@@ -9,10 +9,9 @@ model = joblib.load('model.joblib')
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    data = request.josn
+    data = request.json
     prediction = model.predict(np.array(data['input']).reshape(1, -1))
-    return jsonify({'prediction': prediction.lolist()})
+    return jsonify({'prediction': prediction.tolist()})
 
-
-if __name__ == 'main':
-    app.run(Deubg=True, host='0.0.0.0')
+if __name__ == '__main__':
+    app.run(debug=True, host="0.0.0.0", port=5000)
