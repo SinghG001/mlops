@@ -2,3 +2,4 @@ data/movies.csv
 dev-remote
 mlruns
 dvc remote add -d local-remote dev-remote
+__pycache__/
