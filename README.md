@@ -1,1 +1,1 @@
-//Define project details here.
+# Define project details here.
