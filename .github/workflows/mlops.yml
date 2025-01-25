@@ -69,7 +69,7 @@ jobs:
 
   train:
       runs-on: ubuntu-latest
-      needs: ingestion  # This job will train the ML model
+      needs: test  # This job will train the ML model
       steps:
         - name: Checkout Code
           uses: actions/checkout@v3
