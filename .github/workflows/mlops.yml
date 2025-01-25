@@ -6,7 +6,7 @@ jobs:
 
   lint: # check for code quality/formatting
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - name: Checkout Code
@@ -24,7 +24,7 @@ jobs:
         run: black .
         
   ingestion:
-      runs-on: ubuntu-latest
+      runs-on: windows-latest
       needs: lint  # This job ingest data 
       steps:
         - name: Checkout Code
@@ -46,7 +46,7 @@ jobs:
           
 
   test:
-      runs-on: ubuntu-latest
+      runs-on: windows-latest
       needs: ingestion  # This job will check  test coverage for data quality
       steps:
         - name: Checkout Code
@@ -70,7 +70,7 @@ jobs:
           run: pytest test_dataset.py
 
   train:
-      runs-on: ubuntu-latest
+      runs-on: windows-latest
       needs: test  # This job will train the ML model
       steps:
         - name: Checkout Code
@@ -97,7 +97,7 @@ jobs:
           run: python predict.py
 
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     needs: train # This job will build and dpeloy the model as a docker image in a docker hub repo
 
     steps:
