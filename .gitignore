@@ -3,3 +3,5 @@ dev-remote
 mlruns
 dvc remote add -d local-remote dev-remote
 __pycache__/
+.pytest_cache/
+.vscode/
