@@ -15,6 +15,12 @@ class Cleaner:
         df['PastAccident'].fillna('Unknown', inplace=True)
         return df
 
+"""
+    A pytest fixture that provides sample input data for testing the Cleaner class.
+    Returns:
+    - pd.DataFrame: A sample DataFrame with various columns containing missing values and
+      specific formats to test the cleaning process.
+"""
 @pytest.fixture
 def sample_data():
     return pd.DataFrame({
@@ -35,6 +41,15 @@ def sample_data():
 def cleaner():
     return Cleaner()
 
+
+"""
+Tests the clean_data method of the Cleaner class to ensure it performs the expected
+cleaning operations on the input data.
+
+Parameters:
+- cleaner (Cleaner): An instance of the Cleaner class.
+- sample_data (pd.DataFrame): A sample DataFrame to test the cleaning process.
+"""
 def test_clean_data(cleaner, sample_data):
     cleaned_data = cleaner.clean_data(sample_data.copy())
 
