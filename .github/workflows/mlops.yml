@@ -60,16 +60,16 @@ jobs:
           run: pip install -r requirements.txt
     
         - name: Run Unit Tests
-          run: python ingest.py
+          run: python src/ingest.py
           
         - name: Run Unit Tests
-          run: python clean.py
+          run: python src/clean.py
           
         - name: Run Unit Tests
-          run: python train.py
+          run: python src/train.py
           
         - name: Run Unit Tests
-          run: python predict.py
+          run: python src/predict.py
           
   deploy:
     runs-on: ubuntu-latest
