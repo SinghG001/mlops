@@ -22,7 +22,6 @@ jobs:
 
       - name: Run Linter
         run: black .
-
         
   ingestion:
       runs-on: ubuntu-latest
