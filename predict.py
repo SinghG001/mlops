@@ -50,7 +50,8 @@ def train_with_mlflow():
     with open('config.yml', 'r') as file:
         config = yaml.safe_load(file)
 
-    mlflow.set_experiment("Model Training Experiment")
+    mlflow.set_experiment("Group 89 Mlops Assignmnet 1")
+
     
     with mlflow.start_run() as run:
         # Load data
@@ -81,6 +82,7 @@ def train_with_mlflow():
         # Tags 
         mlflow.set_tag('Model developer', 'group89')
         mlflow.set_tag('preprocessing', 'OneHotEncoder, Standard Scaler, and MinMax Scaler')
+        mlflow.set_tag("user_id",'Mlops Assignment - Group89')
         
         # Log metrics
         model_params = config['model']['params']
@@ -89,10 +91,12 @@ def train_with_mlflow():
         mlflow.log_metric("roc", roc_auc_score)
         mlflow.log_metric('precision', report['weighted avg']['precision'])
         mlflow.log_metric('recall', report['weighted avg']['recall'])
+        mlflow.log_param('data_source', 'Insurance dataset')
         mlflow.sklearn.log_model(trainer.pipeline, "model")
+    
                 
         # Register the model
-        model_name = "insurance_model" 
+        model_name = trainer.model_name 
         model_uri = f"runs:/{run.info.run_id}/model"
         mlflow.register_model(model_uri, model_name)
 
