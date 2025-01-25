@@ -23,7 +23,26 @@ def sample_data():
 @patch("builtins.open", new_callable=mock_open, read_data="dummy")
 @patch("yaml.safe_load")
 @patch("pandas.read_csv")
+
+
+
 def test_load_data(mock_read_csv, mock_safe_load, mock_open, config_data, sample_data):
+    """
+        Tests the load_data method of the Ingestion class to ensure it reads
+        and loads training and testing data correctly.
+
+        Mocks:
+        - yaml.safe_load: To return mock configuration data.
+        - pandas.read_csv: To return mock dataframes.
+        - open: To simulate opening the configuration file.
+
+        Parameters:
+        - mock_read_csv: Mocked pandas.read_csv function.
+        - mock_safe_load: Mocked yaml.safe_load function.
+        - mock_open: Mocked open function for configuration files.
+        - config_data: Fixture providing mock configuration data.
+        - sample_data: Fixture providing sample training and testing data.
+    """
     # Mock the YAML safe_load to return the sample config data
     mock_safe_load.return_value = config_data
 
