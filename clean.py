@@ -1,24 +1,3 @@
-
-# from mlflow_train import test_train_split, load_data, create_model
-
-
-# data = load_data()
-
-# def test_train_test_split():
-#     X_train, X_test, y_train, y_test = test_train_split(data)
-#     assert X_train.shape[1] == X_test.shape[1], "Train and test feature dimensions mismatch"
-
-# def test_model_accuracy():
-#     X_train, X_test, y_train, y_test = test_train_split(data)
-#     model = create_model(random_state)
-#     model.fit(X_train, y_train.values.ravel())
-#     accuracy = model.score(X_test, y_test)
-#     assert accuracy > 0.8, "Model accuracy is below acceptable threshold"
-
-# random_state = 42
-# test_train_test_split()
-# test_model_accuracy()
-
 import logging
 import yaml
 import mlflow
@@ -29,47 +8,62 @@ from src.train import Trainer
 from src.predict import Predictor
 from sklearn.metrics import classification_report
 
-# Set up logging
-logging.basicConfig(level=logging.INFO,format='%(asctime)s:%(levelname)s:%(message)s')
+# Configure logging to display progress and key actions during execution
+logging.basicConfig(level=logging.INFO, format='%(asctime)s:%(levelname)s:%(message)s')
 
 def main():
-    # Load data
-    ingestion = Ingestion()
-    train, test = ingestion.load_data()
-    logging.info("Data ingestion completed successfully")
+    """
+    Main function to execute data ingestion and cleaning without MLflow tracking.
+    Includes:
+    - Data ingestion
+    - Data cleaning
+    """
+    # Step 1: Load data using the Ingestion class
+    ingestion = Ingestion()  # Create an instance of the Ingestion class
+    train, test = ingestion.load_data()  # Load training and testing datasets
+    logging.info("Data ingestion completed successfully")  # Log successful data ingestion
 
-    # Clean data
-    cleaner = Cleaner()
-    train_data = cleaner.clean_data(train)
-    test_data = cleaner.clean_data(test)
-    logging.info("Data cleaning completed successfully")
+    # Step 2: Clean data using the Cleaner class
+    cleaner = Cleaner()  # Create an instance of the Cleaner class
+    train_data = cleaner.clean_data(train)  # Clean the training data
+    test_data = cleaner.clean_data(test)  # Clean the testing data
+    logging.info("Data cleaning completed successfully")  # Log successful data cleaning
 
-
-
-def train_with_mlflow():
-
+def cleandata_with_mlflow():
+    """
+    Function to execute data ingestion and cleaning with MLflow tracking.
+    Includes:
+    - Data ingestion
+    - Data cleaning
+    - Logging the process with MLflow
+    """
+    # Step 1: Load configuration from a YAML file
     with open('config.yml', 'r') as file:
-        config = yaml.safe_load(file)
+        config = yaml.safe_load(file)  # Load YAML configuration file
 
+    # Step 2: Set the MLflow experiment name
     mlflow.set_experiment("Model Training Experiment")
-    
+
+    # Step 3: Start an MLflow run for tracking
     with mlflow.start_run() as run:
-        # Load data
-        ingestion = Ingestion()
-        train, test = ingestion.load_data()
-        logging.info("Data ingestion completed successfully")
+        logging.info("MLflow run started")  # Log the start of the MLflow run
 
-        # Clean data
-        cleaner = Cleaner()
-        train_data = cleaner.clean_data(train)
-        test_data = cleaner.clean_data(test)
-        logging.info("Data cleaning completed successfully")
+        # Step 4: Load data using the Ingestion class
+        ingestion = Ingestion()  # Create an instance of the Ingestion class
+        train, test = ingestion.load_data()  # Load training and testing datasets
+        logging.info("Data ingestion completed successfully")  # Log successful data ingestion
 
-        
+        # Step 5: Clean data using the Cleaner class
+        cleaner = Cleaner()  # Create an instance of the Cleaner class
+        train_data = cleaner.clean_data(train)  # Clean the training data
+        test_data = cleaner.clean_data(test)  # Clean the testing data
+        logging.info("Data cleaning completed successfully")  # Log successful data cleaning
 
-        
 if __name__ == "__main__":
-    # main()
-    train_with_mlflow()
-
-
+    """
+    Entry point for the script. Choose between:
+    - `main()`: Executes the pipeline without MLflow tracking.
+    - `cleandata_with_mlflow()`: Executes the pipeline with MLflow tracking.
+    """
+    # main()  
+    cleandata_with_mlflow()

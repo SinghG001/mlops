@@ -51,7 +51,7 @@ def main():
     print("=====================================================\n")
 
 
-def train_with_mlflow():
+def predict_with_mlflow():
     """
     Function to execute the pipeline with MLflow tracking.
     Includes:
@@ -125,6 +125,10 @@ def train_with_mlflow():
         print("=====================================================\n")
         
 if __name__ == "__main__":
+    """
+    Entry point for the script. Provides options to execute:
+    - The pipeline without MLflow tracking (main function).
+    - The pipeline with MLflow tracking (predict_with_mlflow function).
+    """
     # main()
-    # Execute the pipeline with MLflow tracking
-    train_with_mlflow()
+    predict_with_mlflow()
