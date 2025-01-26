@@ -75,7 +75,7 @@ Run the following command in docker terminal
 
 
 ## Note:
-This assignment is to gain hands-on experience with MLOps tools and technicks by implementing the following.
-1. CI/CD pipelines to manage code, data versining & continues deployment of the models developped
+This assignment is to gain hands-on experience with MLOps tools and technology by implementing the following.
+1. CI/CD pipelines to manage code, data versining & continues deployment of the models developed
 2. Use GitHub for code versioning and DVC for data versioning
 3. Use docker for deployments and monitor the model drift.
